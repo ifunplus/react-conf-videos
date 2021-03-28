@@ -20,7 +20,7 @@ import {
   zip
 } from 'ramda';
 
-import { ConferenceInput, JSONInput, VideoInput } from '../src/domain';
+import { ConferenceInput, JSONInput, VideoInput } from '../src/domain/InputJSON'
 
 const isTest = process.env.NODE_ENV === 'test';
 
@@ -120,9 +120,8 @@ const createHead = (conferenceVids: JSONInput) => `# React.js Conference Videos.
 [www.reactjsvideos.com](https://www.reactjsvideos.com)
 
 List of react conference videos.
-**${countVideos(conferenceVids)}** videos from **${
-  conferenceVids.length
-}** Conferences.
+**${countVideos(conferenceVids)}** videos from **${conferenceVids.length
+  }** Conferences.
 `;
 
 const computeLnks = (titlesAndYears: Array<[string, string]>) => {

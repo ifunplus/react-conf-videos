@@ -1,6 +1,6 @@
+import * as React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
-import * as React from 'react';
 
 import { SearchInput } from './SearchInput';
 

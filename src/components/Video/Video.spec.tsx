@@ -1,50 +1,37 @@
 import * as React from 'react';
 
+import { shallow } from 'enzyme';
 import toJSON from 'enzyme-to-json';
 
 import {
   mockConference,
   mockVideo,
-  mountWithStore,
-  wrapWithMemoryRouter
 } from 'utils/test';
-import { Conference } from '../../domain';
 import { VideoInner } from './Video';
+import { ConferenceTransformed } from '../../domain/TransformedJSON';
 
 describe('Video', () => {
   const getData = () => {
     const video = mockVideo();
-    const conference: Conference = mockConference();
-    const speaker = { name: 'Simon Carter' };
-    const state = {
-      data: {
-        videos: { xxx: video },
-        presenters: { aaa: speaker },
-        conferences: { yyy: conference }
-      }
-    };
-    const isOpen = false;
+    const conference: ConferenceTransformed = mockConference();
+    const presenter = { name: 'Simon Carter' };
+
     const props = {
       videoId: 'xxx',
       conferenceId: 'yyy',
       video,
-      speaker,
-      conference,
-      isOpen,
-      toggleIsOpen: jest.fn()
+      presenter,
+      conference
     };
-    return { props, state };
+    return { props };
   };
 
   it('should render and connect', () => {
     // arrange
-    const { props, state } = getData();
+    const { props } = getData();
 
     // act
-    const wrapper = mountWithStore(
-      state,
-      wrapWithMemoryRouter(<VideoInner {...props} />)
-    );
+    const wrapper = shallow(<VideoInner {...props} />)
 
     // assert
     expect(toJSON(wrapper)).toMatchSnapshot();
@@ -52,16 +39,10 @@ describe('Video', () => {
 
   it('should toggle the isOpen state prop on click', () => {
     // arrange
-    const { props, state } = getData();
+    const { props } = getData();
 
     // act
-    const wrapper = mountWithStore(
-      state,
-      wrapWithMemoryRouter(<VideoInner {...props} />)
-    );
+    const wrapper = shallow(<VideoInner {...props} />)
     wrapper.find('.top').simulate('click');
-
-    // assert
-    expect(props.toggleIsOpen).toHaveBeenCalled();
   });
 });
